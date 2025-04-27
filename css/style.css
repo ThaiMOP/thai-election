@@ -26,7 +26,21 @@ main {
   font-size: 24px;
   color: #333;
 }
+/* เพิ่มตรงนี้สำหรับ section ทั้งกล่อง */
+.election-choice {
+  animation: fadeIn 1.2s ease forwards;
+}
 
+/* เพิ่ม delay ถ้าอยากให้ header แยกมา fade ก่อน */
+header {
+  background-color: #1565c0;
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+  animation: fadeIn 0.8s ease forwards;
+}
+
+/* ปรับ button ให้เฟดพร้อมกัน */
 button {
   font-size: 18px;
   padding: 15px 20px;
@@ -38,8 +52,20 @@ button {
   width: 90%;
   max-width: 600px;
   transition: background-color 0.3s;
+  animation: fadeIn 1.5s ease forwards;
 }
 
 button:hover {
   background-color: #0d47a1;
+}
+/* Animation แบบ fade-in */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px); /* เลื่อนลงมานิดนึง */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
