@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>การเลือกตั้งท้องถิ่น เชียงใหม่ เขต 68</title>
+  <link rel="stylesheet" href="/css/zone.css">
+  <link rel="stylesheet" href="https://slw-system.pages.dev/assets/css/font-face.css">
+</head>
+<body>
+
+  <header>
+    <h1>การเลือกตั้งท้องถิ่น เชียงใหม่ เขต 68</h1>
+    <p id="onlineTime">กำลังโหลดเวลา...</p>
+  </header>
+
+  <main>
+    <h2>ข้อมูลผู้สมัครท้องถิ่น</h2>
+    <table id="localTable">
+      <thead>
+        <tr>
+          <th>หมายเลข</th>
+          <th>ชื่อผู้สมัคร</th>
+          <th>พรรคการเมือง</th>
+          <th>คะแนน</th>
+          <th>%</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- ข้อมูลจะเติมตรงนี้ -->
+      </tbody>
+    </table>
+  </main>
+
+  <script>
+    // ฟังก์ชันอัปเดตเวลาออนไลน์ทุก 1 วินาที
+    function updateOnlineTime() {
+      const now = new Date();
+      const formatted = now.toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' });
+      document.getElementById('onlineTime').textContent = `ออนไลน์เวลา: ${formatted}`;
+    }
+    setInterval(updateOnlineTime, 1000);
+    updateOnlineTime();
+
+    // ดึงข้อมูล API
+    fetch('https://script.google.com/macros/s/AKfycbxekGDgNCJr7Xlbj6M9Kyh9sERodqkIZZEtCAB-Fe8DnELTL8EPDNuMkO3KoI5jCt4/exec')
+      .then(response => response.json())
+      .then(data => {
+        const local = data.localCMI68; // เอาเฉพาะ localCMI68
+        const tableBody = document.getElementById('localTable').querySelector('tbody');
+
+        local.forEach(candidate => {
+          const row = `
+            <tr>
+              <td>${candidate.number || '-'}</td>
+              <td>${candidate.candidate || '-'}</td>
+              <td style="background: ${candidate.color || '#ccc'};">${candidate.party || '-'}</td>
+              <td>${candidate.votes ? candidate.votes.toLocaleString('th-TH') : '0'}</td>
+              <td>${candidate.percent ? candidate.percent.toFixed(2) : '0.00'}%</td>
+            </tr>
+          `;
+          tableBody.innerHTML += row;
+        });
+      })
+      .catch(error => {
+        console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+        const tableBody = document.getElementById('localTable').querySelector('tbody');
+        tableBody.innerHTML = `<tr><td colspan="5">ไม่สามารถโหลดข้อมูลได้</td></tr>`;
+      });
+  </script>
+
+</body>
+</html>
