@@ -69,3 +69,39 @@ button:hover {
     transform: translateY(0);
   }
 }
+.election-choice {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+  background: white;
+  padding: 30px 20px;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  animation: fadeIn 1s ease forwards;
+}
+
+.election-choice h2 {
+  font-size: 28px;
+  margin-bottom: 30px;
+  color: #1e293b;
+}
+
+.election-choice button {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 15px 20px;
+  font-size: 18px;
+  border: none;
+  border-radius: 12px;
+  background: #1976d2;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+  animation: fadeUp 0.8s ease both;
+}
+
+.election-choice button:hover {
+  background: #0d47a1;
+  transform: translateY(-3px);
+}
