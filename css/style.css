@@ -116,3 +116,11 @@ body.arlington .election-choice button:hover {
   background: #0d47a1;
   transform: translateY(-3px);
 }
+
+footer {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    padding: 10px;
+    background: #00b111;
+}
