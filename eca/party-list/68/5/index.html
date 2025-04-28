@@ -16,7 +16,13 @@
 
   <main>
     <h2>ข้อมูลผู้สมัคร</h2>
-    <table id="zoneTable">
+
+    <!-- พื้นที่สำหรับข้อมูล data-partylist -->
+    <div id="dataPartylistSummary">
+      <!-- จะเติมข้อมูลตรงนี้ -->
+    </div>
+
+    <table id="partylistTable">
       <thead>
         <tr>
           <th>อันดับ</th>
@@ -44,11 +50,27 @@
     updateOnlineTime();
 
     // ดึงข้อมูล API
-    fetch('https://script.google.com/macros/s/AKfycbxekGDgNCJr7Xlbj6M9Kyh9sERodqkIZZEtCAB-Fe8DnELTL8EPDNuMkO3KoI5jCt4/exec')
+    fetch('https://script.google.com/macros/s/AKfycbzlnjEtc2kGQM7AtaMEbyQSdu-cyQKDQc51sR8BQOZofAWhBJ2Uged34_1kcCHLZyTK/exec')
       .then(response => response.json())
       .then(data => {
-        const zones = data.zone; // เอาเฉพาะ zone
-        const tableBody = document.getElementById('zoneTable').querySelector('tbody');
+        // ใส่ข้อมูล data-partylist
+        const dataPartylist = data.data-partylist;
+        const summaryDiv = document.getElementById('dataPartylistSummary');
+
+        if (dataPartylist) {
+          const summaryHTML = `
+            <p><strong>จำนวนผู้มีสิทธิ์เลือกตั้ง:</strong> ${Number(dataPartylist.total_eligible_voters || 0).toLocaleString('th-TH')} คน</p>
+            <p><strong>จำนวนผู้มาใช้สิทธิ์:</strong> ${Number(dataPartylist.total_votes_cast || 0).toLocaleString('th-TH')} คน</p>
+            <p><strong>จำนวนบัตรดี:</strong> ${Number(dataPartylist.valid_votes || 0).toLocaleString('th-TH')} ใบ</p>
+            <p><strong>จำนวนบัตรเสีย:</strong> ${Number(dataPartylist.invalid_votes || 0).toLocaleString('th-TH')} ใบ</p>
+            <p><strong>จำนวนไม่ประสงค์ลงคะแนน:</strong> ${Number(dataPartylist.no_vote || 0).toLocaleString('th-TH')} คน</p>
+          `;
+          summaryDiv.innerHTML = summaryHTML;
+        }
+
+        // ใส่ข้อมูล vote-partylist
+        const zones = data['vote-partylist'];
+        const tableBody = document.getElementById('partylistTable').querySelector('tbody');
 
         zones.forEach(zone => {
           const row = `
@@ -57,8 +79,8 @@
               <td>${zone.number || '-'}</td>
               <td>${zone.candidate || '-'}</td>
               <td style="background: ${zone.color || '#ccc'};">${zone.party || '-'}</td>
-              <td>${zone.votes.toLocaleString('th-TH') || '0'}</td>
-              <td>${zone.percent.toFixed(2) || '0.00'}%</td>
+              <td>${zone.votes !== undefined ? Number(zone.votes).toLocaleString('th-TH') : '0'}</td>
+              <td>${zone.percent !== undefined ? zone.percent.toFixed(2) : '0.00'}%</td>
             </tr>
           `;
           tableBody.innerHTML += row;
@@ -66,10 +88,11 @@
       })
       .catch(error => {
         console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
-        const tableBody = document.getElementById('zoneTable').querySelector('tbody');
-        tableBody.innerHTML = `<tr><td colspan="5">ไม่สามารถโหลดข้อมูลได้</td></tr>`;
+        const tableBody = document.getElementById('partylistTable').querySelector('tbody');
+        tableBody.innerHTML = `<tr><td colspan="6">ไม่สามารถโหลดข้อมูลได้</td></tr>`;
       });
   </script>
 
 </body>
+
 </html>
