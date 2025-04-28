@@ -10,37 +10,42 @@
 <body>
 
   <header>
-    <h1>การเลือกตั้ง ส.ส.แบบบัญชีรายชื่อ</h1>
+    <h1>การเลือกตั้งแบบบัญชีรายชื่อ</h1>
     <p id="onlineTime">กำลังโหลดเวลา...</p>
   </header>
-
   <main>
-    <h2>ข้อมูลผู้สมัคร</h2>
-
-    <!-- พื้นที่สำหรับข้อมูล data-partylist -->
-    <div id="dataPartylistSummary">
-      <!-- จะเติมข้อมูลตรงนี้ -->
-    </div>
-
-    <table id="partylistTable">
+    <h2 style="margin-top:40px;">ข้อมูลการเลือกตั้ง</h2>
+    <table id="dataPartylistTable">
       <thead>
         <tr>
-          <th>อันดับ</th>
+          <th>รายการ</th>
+          <th>จำนวน</th>
+          <th>ร้อยละ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- ข้อมูลจะเติมตรงนี้ -->
+      </tbody>
+    </table>
+    
+    <h2>คะแนนรายพรรค</h2>
+    <table id="votePartylistTable">
+      <thead>
+        <tr>
           <th>หมายเลข</th>
-          <th>ชื่อผู้สมัคร</th>
           <th>พรรคการเมือง</th>
           <th>คะแนน</th>
           <th>% คะแนน</th>
         </tr>
       </thead>
       <tbody>
-        <!-- จะเติมข้อมูลตรงนี้ -->
+        <!-- ข้อมูลจะเติมตรงนี้ -->
       </tbody>
     </table>
   </main>
 
   <script>
-    // อัปเดตเวลาออนไลน์ทุก 1 วินาที
+    // อัปเดตเวลาออนไลน์ทุกวินาที
     function updateOnlineTime() {
       const now = new Date();
       const formatted = now.toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' });
@@ -49,50 +54,57 @@
     setInterval(updateOnlineTime, 1000);
     updateOnlineTime();
 
-    // ดึงข้อมูล API
-    fetch('https://script.google.com/macros/s/AKfycbzlnjEtc2kGQM7AtaMEbyQSdu-cyQKDQc51sR8BQOZofAWhBJ2Uged34_1kcCHLZyTK/exec')
+    // ดึงข้อมูลจาก API
+    fetch('https://script.google.com/macros/s/AKfycbxuXGAfk334OI1J2YvYhluBg9lWK0WWh_nAFXSSXGElq-nF5gx41ROd6rXmkRGmLo_9/exec')
       .then(response => response.json())
       .then(data => {
-        // ใส่ข้อมูล data-partylist
-        const dataPartylist = data.data-partylist;
-        const summaryDiv = document.getElementById('dataPartylistSummary');
+        const votePartylist = data['vote-partylist'];
+        const dataPartylist = data['data-partylist'];
 
-        if (dataPartylist) {
-          const summaryHTML = `
-            <p><strong>จำนวนผู้มีสิทธิ์เลือกตั้ง:</strong> ${Number(dataPartylist.total_eligible_voters || 0).toLocaleString('th-TH')} คน</p>
-            <p><strong>จำนวนผู้มาใช้สิทธิ์:</strong> ${Number(dataPartylist.total_votes_cast || 0).toLocaleString('th-TH')} คน</p>
-            <p><strong>จำนวนบัตรดี:</strong> ${Number(dataPartylist.valid_votes || 0).toLocaleString('th-TH')} ใบ</p>
-            <p><strong>จำนวนบัตรเสีย:</strong> ${Number(dataPartylist.invalid_votes || 0).toLocaleString('th-TH')} ใบ</p>
-            <p><strong>จำนวนไม่ประสงค์ลงคะแนน:</strong> ${Number(dataPartylist.no_vote || 0).toLocaleString('th-TH')} คน</p>
-          `;
-          summaryDiv.innerHTML = summaryHTML;
-        }
-
-        // ใส่ข้อมูล vote-partylist
-        const zones = data['vote-partylist'];
-        const tableBody = document.getElementById('partylistTable').querySelector('tbody');
-
-        zones.forEach(zone => {
+        // ตารางคะแนนรายพรรค
+        const voteTableBody = document.getElementById('votePartylistTable').querySelector('tbody');
+        votePartylist.forEach(party => {
           const row = `
             <tr>
-              <td>${zone.no || '-'}</td>
-              <td>${zone.number || '-'}</td>
-              <td>${zone.candidate || '-'}</td>
-              <td style="background: ${zone.color || '#ccc'};">${zone.party || '-'}</td>
-              <td>${zone.votes !== undefined ? Number(zone.votes).toLocaleString('th-TH') : '0'}</td>
-              <td>${zone.percent !== undefined ? zone.percent.toFixed(2) : '0.00'}%</td>
+              <td>${party.no || '-'}</td>
+              <td style="background: ${party.color || '#ccc'};color:#fff;">${party.party || '-'}</td>
+              <td>${party.votes.toLocaleString('th-TH') || '0'}</td>
+              <td>${party.percent.toFixed(2) || '0.00'}%</td>
             </tr>
           `;
-          tableBody.innerHTML += row;
+          voteTableBody.innerHTML += row;
         });
+
+        // ตารางข้อมูลสรุปเลือกตั้ง
+        const dataTableBody = document.getElementById('dataPartylistTable').querySelector('tbody');
+        const mapping = {
+          voters: "จำนวนผู้มีสิทธิ์เลือกตั้ง",
+          users: "จำนวนผู้มาใช้สิทธิ์",
+          good: "บัตรดี",
+          bad: "บัตรเสีย",
+          none: "ไม่เลือกผู้สมัคร",
+          counted: "จำนวนที่นับแล้ว"
+        };
+        for (const key in mapping) {
+          if (dataPartylist.hasOwnProperty(key)) {
+            const percentKey = 'p' + key; // ตัวคำนวณ %
+            const row = `
+              <tr>
+                <td>${mapping[key]}</td>
+                <td>${dataPartylist[key].toLocaleString('th-TH')}</td>
+                <td>${dataPartylist[percentKey] ? dataPartylist[percentKey].toFixed(2) : '0.00'}%</td>
+              </tr>
+            `;
+            dataTableBody.innerHTML += row;
+          }
+        }
       })
       .catch(error => {
-        console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
-        const tableBody = document.getElementById('partylistTable').querySelector('tbody');
-        tableBody.innerHTML = `<tr><td colspan="6">ไม่สามารถโหลดข้อมูลได้</td></tr>`;
+        console.error('เกิดข้อผิดพลาด:', error);
+        document.getElementById('votePartylistTable').querySelector('tbody').innerHTML = `<tr><td colspan="4">ไม่สามารถโหลดข้อมูลได้</td></tr>`;
+        document.getElementById('dataPartylistTable').querySelector('tbody').innerHTML = `<tr><td colspan="3">ไม่สามารถโหลดข้อมูลได้</td></tr>`;
       });
   </script>
 
 </body>
-
 </html>
