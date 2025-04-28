@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>District 8 - Thai Election</title>
+  <title>การเลือกตั้ง ส.ส.นครศรีธรรมราช เขต 8 แทนตำแหน่งที่ว่าง</title>
   <link rel="stylesheet" href="/css/zone.css">
   <link rel="stylesheet" href="https://slw-system.pages.dev/assets/css/font-face.css">
 </head>
 <body>
 
   <header>
-    <h1>การเลือกตั้ง เขต 8 นครศรีธรรมราช</h1>
+    <h1>การเลือกตั้ง ส.ส.นครศรีธรรมราช เขต 8 แทนตำแหน่งที่ว่าง</h1>
     <p id="onlineTime">กำลังโหลดเวลา...</p>
   </header>
 
@@ -19,6 +19,7 @@
     <table id="zoneTable">
       <thead>
         <tr>
+          <th>อันดับ</th>
           <th>หมายเลข</th>
           <th>ชื่อผู้สมัคร</th>
           <th>พรรคการเมือง</th>
@@ -52,6 +53,7 @@
         zones.forEach(zone => {
           const row = `
             <tr>
+              <td>${zone.no || '-'}</td>
               <td>${zone.number || '-'}</td>
               <td>${zone.candidate || '-'}</td>
               <td style="background: ${zone.color || '#ccc'};">${zone.party || '-'}</td>
