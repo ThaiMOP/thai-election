@@ -8,6 +8,16 @@
   <link rel="stylesheet" href="mtc.css">
   <link rel="stylesheet" href="/css/zone.css">
   <link rel="stylesheet" href="https://slw-system.pages.dev/assets/css/font-face.css">
+  <style>
+    
+    button {
+        width: 100%;
+        padding: 16px;
+        background: #ffd500;
+        color: #fff;
+        border: 1px solid #333;
+    }
+  </style>
 </head>
 <body>
 
@@ -321,11 +331,10 @@
       const currentDate = now.toISOString().slice(0, 10); // YYYY-MM-DD
       const currentTime = now.getHours() * 60 + now.getMinutes(); // Minutes since midnight
   
-      const targetDate = '2025-05-10';
+      const targetDate = '2025-05-11';
   
       const ranges = [
-        // { start: 7 * 60 + 50, end: 8 * 60 + 10, message: 'เปิดหีบเลือกตั้ง' },
-        { start: 17 * 60 + 50, end: 17 * 60 + 55, message: 'ทดสอบระบบ' },
+        { start: 7 * 60 + 50, end: 8 * 60 + 10, message: 'เปิดหีบเลือกตั้ง' },
         { start: 16 * 60 + 50, end: 17 * 60 + 10, message: 'เปิดหีบเลือกตั้ง เริ่มนับคะแนน' }
       ];
   
