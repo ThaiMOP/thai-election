@@ -278,6 +278,76 @@
       </div>
     </div>
   </main>
+  <div id="popup" style="
+    display: none;
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 2px solid black;
+    padding: 20px;
+    z-index: 9999;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);">
+    <p id="popup-text" style="margin-bottom: 10px; font-size: 20px; font-weight: bold;"></p>
+    <button onclick="closePopup()">ปิด</button>
+  </div>
+  <script>
+    function showPopup(message) {
+      document.getElementById('popup-text').innerText = message;
+      document.getElementById('popup').style.display = 'block';
+    }
+  
+    function closePopup() {
+      document.getElementById('popup').style.display = 'none';
+    }
+  
+    function checkPopupTime() {
+      const now = new Date();
+      const currentDate = now.toISOString().slice(0, 10); // YYYY-MM-DD
+      const currentTime = now.getHours() * 60 + now.getMinutes(); // minutes since midnight
+  
+      // วันที่ที่ต้องการ
+      const targetDate = '2025-05-11';
+  
+      // กำหนดช่วงเวลา (นาที)
+      const ranges = [
+        { start: 17 * 60 + 48, end: 17 * 60 + 50, message: 'ทดสอบระบบ' },
+        // { start: 7 * 60 + 50, end: 8 * 60 + 10, message: 'เปิดหีบเลือกตั้ง' },
+        { start: 16 * 60 + 50, end: 17 * 60 + 10, message: 'เปิดหีบเลือกตั้ง เริ่มนับคะแนน' }
+      ];
+  
+      if (currentDate === targetDate) {
+        for (const range of ranges) {
+          if (currentTime >= range.start && currentTime <= range.end) {
+            showPopup(range.message);
+            return;
+          }
+        }
+      }
+      // ถ้าอยู่นอกช่วง ไม่ต้องแสดง
+      closePopup();
+    }
+  
+    // เช็คทุก 30 วินาที
+    setInterval(checkPopupTime, 30000);
+    checkPopupTime(); // เรียกทันทีเมื่อโหลด
+  </script>
+  
+  <script>
+    function showPopup(message) {
+      document.getElementById('popup-text').innerText = message;
+      document.getElementById('popup').style.display = 'block';
+    }
+  
+    function closePopup() {
+      document.getElementById('popup').style.display = 'none';
+    }
+  
+    function checkPopupTime() {
+      const now = new Date();
+      const currentDate = now.toISOString().slice(0, 10); // YYYY-MM-DD
+      const currentTime = now.getHours() * 60 + now.getMinutes(); // minutes since midnight
 
   <script>
     fetch("https://script.google.com/macros/s/AKfycby7BnXcogyoj2vBtMk5AKEqhLv51NzNORZl0KYcqQCFbYl4L4UB2XIXl1VdIAqYl0YK/exec")
