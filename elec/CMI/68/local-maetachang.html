@@ -169,7 +169,7 @@
       <div class="bar-right" id="barRight" style="width: 0%">0%</div>
     </div>
   
-    <div class="label" id="percentText">กำลังโหลดข้อมูล...</div>
+    <div class="label" id="percentText" style=" margin-bottom: 20px; ">กำลังโหลดข้อมูล...</div>
     <div class="container">
       <div class="row">
         <div class="col-6" style=" display: flex; justify-content: center; ">
@@ -446,6 +446,21 @@
       .catch(err => {
         console.error("โหลดข้อมูลล้มเหลว:", err);
         document.getElementById("percentText").textContent = "เกิดข้อผิดพลาดในการโหลดข้อมูล";
+      });
+  </script>
+    <script>
+    fetch("https://script.google.com/macros/s/AKfycbxXuugCG2bxJi1XX5C4oNBVDEMAxudA_N6MhDxI0dPVx9uFr8e9JArTd6Ueg_pHcWQP/exec")
+      .then(res => res.json())
+      .then(data => {
+        for (const key in data) {
+          const el = document.getElementById(key);
+          if (el) {
+            el.textContent = `${key}: ${data[key]}`;
+          }
+        }
+      })
+      .catch(err => {
+        console.error("โหลดข้อมูลล้มเหลว:", err);
       });
   </script>
 </body>
