@@ -50,6 +50,7 @@
     padding: 15px;
     text-align: center;
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    width: 90%;
   }
 
   .group img {
@@ -82,6 +83,13 @@
   .f28 { color: #ff3232; }
 
   /* Responsive */
+  @media (max-width: 900px) {
+    .col-6, .col-2 {
+      flex: 0 0 25%;
+      max-width: 25%;
+    }
+  }
+    
   @media (max-width: 768px) {
     .col-6, .col-2 {
       flex: 0 0 48%;
