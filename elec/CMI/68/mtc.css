@@ -1,0 +1,146 @@
+
+    .col {
+        -ms-flex-preferred-size: 0;
+        flex-basis: 0;
+        -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+        flex-grow: 1;
+        max-width: 100%;
+    }
+    .col-2 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 16.666667%;
+        flex: 0 0 16.666667%;
+        max-width: 16.666667%;
+    }
+    .col-6 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 50%;
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 10px;
+    }
+  
+    .row {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+      justify-content: center;
+      gap: 10px 0;
+    }
+  
+    .group {
+      background: #fff;
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      width: 90%;
+    }
+  
+    .group img {
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+  
+    .group h4 {
+      font-size: 1em;
+      margin: 5px 0;
+    }
+  
+    .group p {
+      font-size: 0.9em;
+      margin: 5px 0;
+    }
+  
+    .group h5 {
+      font-size: 0.95em;
+      font-weight: bold;
+      margin: 5px 0;
+    }
+  
+    /* พรรคสี */
+    .rak { color: #d40000; }
+    .knt { color: #0e45e3; }
+    .f11 { color: #ff0aee; }
+    .f12 { color: #00b41b; }
+    .f27 { color: #00ff14; }
+    .f28 { color: #ff3232; }
+  
+    /* Responsive */
+    @media (max-width: 900px) {
+      .col-6, .col-2 {
+        flex: 0 0 25%;
+        max-width: 25%;
+      }
+    }
+      
+    @media (max-width: 768px) {
+      .col-6, .col-2 {
+        flex: 0 0 48%;
+        max-width: 48%;
+      }
+      header h1 {
+        font-size: 1.3em;
+      }
+      h2 {
+        font-size: 1.2em;
+      }
+      .group h5 {
+        font-size: 0.9em;
+      }
+    }
+  
+    @media (max-width: 480px) {
+      .col-6, .col-2 {
+        flex: 0 0 100%;
+        max-width: 100%;
+      }
+      .group img {
+        width: 70px !important;
+      }
+    }
+  
+      .bar-container {
+        width: 100%;
+        max-width: 600px;
+        margin: auto;
+        background: #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        display: flex;
+        height: 40px;
+        box-shadow: 0 0 5px rgba(0,0,0,0.2);
+      }
+  
+      .bar-left {
+        background-color: #d40000;
+        color: #fff;
+        text-align: center;
+        line-height: 40px;
+        white-space: nowrap;
+        transition: width 0.5s;
+      }
+  
+      .bar-right {
+        background-color: #0e45e3;
+        color: #fff;
+        text-align: center;
+        line-height: 40px;
+        white-space: nowrap;
+        transition: width 0.5s;
+      }
+  
+      .label {
+        text-align: center;
+        margin-top: 10px;
+      }
