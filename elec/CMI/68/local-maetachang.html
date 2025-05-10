@@ -345,21 +345,6 @@
     checkPopupTime(); // Run immediately on load
   </script>
   <script>
-    function showPopup(message) {
-      document.getElementById('popup-text').innerText = message;
-      document.getElementById('popup').style.display = 'block';
-    }
-  
-    function closePopup() {
-      document.getElementById('popup').style.display = 'none';
-    }
-  
-    function checkPopupTime() {
-      const now = new Date();
-      const currentDate = now.toISOString().slice(0, 10); // YYYY-MM-DD
-      const currentTime = now.getHours() * 60 + now.getMinutes(); // minutes since midnight
-
-  <script>
     fetch("https://script.google.com/macros/s/AKfycby7BnXcogyoj2vBtMk5AKEqhLv51NzNORZl0KYcqQCFbYl4L4UB2XIXl1VdIAqYl0YK/exec")
       .then(res => res.json())
       .then(data => {
