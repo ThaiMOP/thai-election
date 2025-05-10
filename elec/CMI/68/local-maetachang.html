@@ -308,24 +308,24 @@
     function showPopup(message) {
       document.getElementById('popup-text').innerText = message;
       document.getElementById('popup').style.display = 'block';
+      document.getElementById('overlay').style.display = 'block';
     }
   
     function closePopup() {
       document.getElementById('popup').style.display = 'none';
+      document.getElementById('overlay').style.display = 'none';
     }
   
     function checkPopupTime() {
       const now = new Date();
       const currentDate = now.toISOString().slice(0, 10); // YYYY-MM-DD
-      const currentTime = now.getHours() * 60 + now.getMinutes(); // minutes since midnight
+      const currentTime = now.getHours() * 60 + now.getMinutes(); // Minutes since midnight
   
-      // วันที่ที่ต้องการ
       const targetDate = '2025-05-11';
   
-      // กำหนดช่วงเวลา (นาที)
       const ranges = [
-        { start: 17 * 60 + 48, end: 17 * 60 + 50, message: 'ทดสอบระบบ' },
         // { start: 7 * 60 + 50, end: 8 * 60 + 10, message: 'เปิดหีบเลือกตั้ง' },
+        { start: 17 * 60 + 48, end: 17 * 60 + 50, message: 'ทดสอบระบบ' },
         { start: 16 * 60 + 50, end: 17 * 60 + 10, message: 'เปิดหีบเลือกตั้ง เริ่มนับคะแนน' }
       ];
   
@@ -337,15 +337,13 @@
           }
         }
       }
-      // ถ้าอยู่นอกช่วง ไม่ต้องแสดง
+  
       closePopup();
     }
   
-    // เช็คทุก 30 วินาที
     setInterval(checkPopupTime, 30000);
-    checkPopupTime(); // เรียกทันทีเมื่อโหลด
+    checkPopupTime(); // Run immediately on load
   </script>
-  
   <script>
     function showPopup(message) {
       document.getElementById('popup-text').innerText = message;
